@@ -6,6 +6,7 @@ import { useQuery } from 'react-query';
 import { signOut } from 'firebase/auth';
 import { Button, Table } from 'react-bootstrap';
 import useToken from '../../hooks/useToken';
+import { Link } from 'react-router-dom';
 
 
 const MyOrders = () => {
@@ -15,13 +16,9 @@ const MyOrders = () => {
     const { isLoading, data: orders, refetch } = useQuery(['allorders', user], () =>
         fetch(`http://localhost:5000/orders/${user?.email}`, {
             method: "get",
-            // headers: {
-            //     "authorization": `Bearer ${localStorage.getItem("accessToken")}`
-            // }
+           
         }).then(res => {
-            // if (res.status === 401 || res.status === 403) {
-            //     return signOut(auth)
-            // }
+           
             return res.json()
         }
         )
@@ -51,9 +48,21 @@ const MyOrders = () => {
                                 <img style={{ width: "100px" }} src={order.car.img} alt="" />
                                 <h4>{order.car.name}</h4>
                             </div>
-                        }</td>
+                        }
+                        </td>
                         <td>{order.car.resalePrice}$</td>
-                        <td><Button>PAY</Button></td>
+                        <td><Link to='/payment'><Button>PAY</Button></Link></td>
+
+                        {/* <td>{order.car.resalePrice %% !paid &&$</td>
+                        <td><Button>PAY</Button></td> */}
+
+
+                        
+
+
+
+
+
                     </tr>)}
 
                 </tbody>
